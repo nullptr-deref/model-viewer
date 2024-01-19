@@ -17,10 +17,16 @@ endif
 
 .PHONY: clean
 
+ifeq ($(OS), Windows_NT)
 $(BIN_DIR)/viewer: $(SRC_DIR)/viewer.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
 	cp /clang64/bin/glfw3.dll /clang64/bin/glew32.dll $(BIN_DIR)/
+else
+$(BIN_DIR)/viewer: $(SRC_DIR)/viewer.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
+endif
 
 clean:
 	rm -rf $(BIN_DIR) $(OBJ_DIR)
